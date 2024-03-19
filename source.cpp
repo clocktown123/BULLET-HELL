@@ -1,7 +1,11 @@
 #include <allegro5/allegro.h>
 #include<allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
-#include "DIRECTIOn.h"
+#include "DIRECTION.h"
+#include "missiles.h"
+
+
+
 //constants: variables that shouldn't change once the game starts
 const float FPS = 60;
 const int SCREEN_W = 800;
@@ -40,6 +44,10 @@ int main()
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+
+	//vector to hold missiles
+	//vector<missiles *> missiles;
+	//vector<missiles *>::iterator iter2;
 
 	while (!doexit)//game loop!
 	{

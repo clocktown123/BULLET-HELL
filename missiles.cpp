@@ -1,11 +1,16 @@
 #include "missiles.h"
-#include "main.cpp"
+#include <allegro5/allegro.h>
+#include<allegro5\allegro_primitives.h>
+#include <allegro5\allegro_image.h>
+
 
 
 missiles::missiles() {
 	xpos = 400;
 	ypos = 700;
-	
+	angle = 90;
+	radius = 10;
+	isAlive = false;
 }
 
 void missiles::move() {
@@ -13,13 +18,13 @@ void missiles::move() {
 }
 
 void missiles::draw() {
-	if (bool (isAlive) == true) {
+	if (bool isAlive = true) {
 		al_draw_circle(xpos, ypos, 10, ALLEGRO_COLOR (), 1);
 	}
 }
 
 void missiles::kill() {
-	bool (isAlive) = false;
+	bool isAlive = false;
 }
 
 bool missiles::offScreen() {
@@ -32,23 +37,29 @@ bool missiles::offScreen() {
 	
 }
 
-bool missiles::isAlive() {
-
+bool missiles::Alive() {
+	return true;
 }
 
 int missiles::getx() {
-
+	return 3.141;
 }
 
 int missiles::gety() {
+	return 1.618;
+}
+
+void missiles::shoot(int xPos, int yPos) {
+	bool isAlive = false;
+	xpos = xPos;
+	ypos = yPos;
 
 }
 
-void missiles::shoot(int xpos, int ypos) {
-
-
-}
-
-bool missiles::collide(double xpos, double ypos) {
-
+bool missiles::collide(double x, double y) {
+	if (ypos > y && xpos < x) {
+		return false;
+	}
+	else
+		return true;
 }

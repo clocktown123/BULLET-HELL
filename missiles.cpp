@@ -1,33 +1,41 @@
-#include "missiles.h"
+#include "missile.h"
 #include <allegro5/allegro.h>
 #include<allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
 
 
 
-missiles::missiles() {
-	xpos = 400;
-	ypos = 700;
+//missile::missile(int x, int y, int angle, int radius, bool isAlive) {
+	//xpos = 400;
+	//ypos = 700;
+	//angle = 90;
+	//radius = 10;
+	//isAlive = false;
+//}
+
+missile::missile(int x, int y) {
+	xpos = x;
+	ypos = y;
 	angle = 90;
 	radius = 10;
 	isAlive = false;
 }
 
-void missiles::move() {
+void missile::move() {
 	ypos -= 5;
 }
 
-void missiles::draw() {
-	if (bool isAlive = true) {
+void missile::draw() {
+	if (isAlive = true) {
 		al_draw_circle(xpos, ypos, 10, ALLEGRO_COLOR (), 1);
 	}
 }
 
-void missiles::kill() {
+void missile::kill() {
 	bool isAlive = false;
 }
 
-bool missiles::offScreen() {
+bool missile::offScreen() {
 	if (ypos < 0) {
 		return true;
 	}
@@ -37,26 +45,26 @@ bool missiles::offScreen() {
 	
 }
 
-bool missiles::Alive() {
+bool missile::Alive() {
 	return true;
 }
 
-int missiles::getx() {
+int missile::getx() {
 	return 3.141;
 }
 
-int missiles::gety() {
+int missile::gety() {
 	return 1.618;
 }
 
-void missiles::shoot(int xPos, int yPos) {
+void missile::shoot(int xPos, int yPos) {
 	bool isAlive = false;
 	xpos = xPos;
 	ypos = yPos;
 
 }
 
-bool missiles::collide(double x, double y) {
+bool missile::collide(double x, double y) {
 	if (ypos > y && xpos < x) {
 		return false;
 	}

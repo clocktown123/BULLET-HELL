@@ -1,5 +1,5 @@
 #pragma once
-class missiles{
+class missile{
 private:
 	double xpos;
 	double ypos;
@@ -8,14 +8,17 @@ private:
 	bool isAlive;
 
 public:
+	missile(int x, int y);
+	
+	//missile();
 	void move();
 	void draw();
 	void kill();
 	bool offScreen();
-	bool isAlive();
+	bool Alive();
 	int getx();
 	int gety();
-	void shoot(int xpos, int ypos);
+	void shoot(int xPos, int yPos);
 	bool collide(double xpos, double ypos);
 
 

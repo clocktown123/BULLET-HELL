@@ -2,7 +2,11 @@
 #include<allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
 #include "DIRECTION.h"
-#include "missiles.h"
+#include "missile.h"
+//#include "missile.cpp"
+#include<iostream>
+#include <vector>
+using namespace std;
 
 
 
@@ -12,7 +16,7 @@ const int SCREEN_W = 800;
 const int SCREEN_H = 800;
 //enumeration to help you remember what numbers represent which directions
 enum MYKEYS {
-	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
+	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_SPACE
 };
 int main()
 {
@@ -26,12 +30,13 @@ int main()
 	ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
 	ALLEGRO_TIMER* timer = al_create_timer(1.0 / FPS);
 	ALLEGRO_BITMAP* shipPic = al_load_bitmap("shipBH.png");
+	ALLEGRO_BITMAP* missilePic = al_load_bitmap("missilePic.png");
 	al_start_timer(timer);
 	//position of player
 	double xPos = 400;
 	double yPos = 700;
 	//game variables
-	bool key[4] = { false, false, false, false }; //holds key clicks
+	bool key[5] = { false, false, false, false, false }; //holds key clicks
 	bool redraw = true; //variable needed for render section
 	bool doexit = false; //handles game loop
 	int dir = 0;
@@ -46,8 +51,12 @@ int main()
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
 	//vector to hold missiles
-	//vector<missiles *> missiles;
-	//vector<missiles *>::iterator iter2;
+	vector<missile *> missiles;
+	vector<missile *>::iterator iter2;
+	for (int i = 0; i < 5; i++) {
+		missile *newMissile = new missile(0,0);
+		missiles.push_back(newMissile);
+	}
 
 	while (!doexit)//game loop!
 	{
@@ -95,6 +104,10 @@ int main()
 			}
 			redraw = true;
 
+			if (key[KEY_SPACE]) {
+				bool isAlive = true;
+			}
+
 			if (key[KEY_RIGHT])
 				dir = RIGHT;
 			else if (key[KEY_LEFT])
@@ -120,6 +133,10 @@ int main()
 			case ALLEGRO_KEY_RIGHT:
 				key[KEY_RIGHT] = true;
 				break;
+			case ALLEGRO_KEY_SPACE:
+				key[KEY_SPACE] = true;
+				//cout << "test" << endl;
+				break;
 			}
 
 		}
@@ -137,6 +154,9 @@ int main()
 			case ALLEGRO_KEY_RIGHT:
 				key[KEY_RIGHT] = false;
 				break;
+			case ALLEGRO_KEY_SPACE:
+				key[KEY_SPACE] = false;
+				break;
 			case ALLEGRO_KEY_ESCAPE:
 				doexit = true;
 				break;
@@ -151,9 +171,18 @@ int main()
 			if (dir == LEFT)
 				al_draw_bitmap_region(shipPic, cellNum * 32, 0, 32, 32, xPos, yPos, ALLEGRO_FLIP_HORIZONTAL);
 			else
-				al_draw_bitmap_region(shipPic, cellNum*32, 0, 32, 32, xPos, yPos, NULL);
-				//al_draw_circle(xPos, yPos, 50, al_map_rgb(50, 120, 10), 10); //draw the player
+				al_draw_bitmap_region(shipPic, cellNum * 32, 0, 32, 32, xPos, yPos, NULL);
+			//al_draw_circle(xPos, yPos, 50, al_map_rgb(50, 120, 10), 10); //draw the player
 			al_flip_display(); //flip everything from memory to gamescreen
+
+			//draw missiles
+			if (key[KEY_SPACE]){
+				//cout << "test" << endl;
+				for (iter2 = missiles.begin(); iter2 != missiles.end(); iter2++) {
+					(*iter2)->draw();
+				}
+			}
+
 		}//end render
 
 	}//end game loop

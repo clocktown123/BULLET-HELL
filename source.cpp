@@ -40,6 +40,7 @@ int main()
 	bool redraw = true; //variable needed for render section
 	bool doexit = false; //handles game loop
 	int dir = 0;
+	int justShot = 0;
 
 	//animation variables
 	int ticker = 0;
@@ -51,10 +52,10 @@ int main()
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
 	//vector to hold missiles
-	vector<missile *> missiles;
-	vector<missile *>::iterator iter2;
+	vector<missile*> missiles;
+	//vector<missile>::iterator iter2;
 	for (int i = 0; i < 5; i++) {
-		missile *newMissile = new missile(0,0);
+		missile* newMissile = new missile(0,0);
 		missiles.push_back(newMissile);
 	}
 
@@ -69,10 +70,22 @@ int main()
 			//this is to slow down your animation
 			//(otherwise it moves at the speed of your gameloop)
 			ticker++;
-			if (ticker > 10)
+			justShot++;
+			if (ticker > 10) {
 				ticker = 0;
-			if (ticker == 0)
+			}
+			if (ticker == 0) {
 				cellNum++;
+			}
+
+			for (auto&& m : missiles) {
+				if (m->isAlive) {
+					m->move();
+				}
+				if (m->offScreen()) {
+					m->kill();
+				}
+			}
 
 			//move the animation forward, loop back after 4 cells
 			if (dir == UP || dir == DOWN) {
@@ -106,6 +119,7 @@ int main()
 
 			if (key[KEY_SPACE]) {
 				bool isAlive = true;
+				cout << "pew" << endl;
 			}
 
 			if (key[KEY_RIGHT])
@@ -114,6 +128,14 @@ int main()
 				dir = LEFT;
 			else
 				dir = UP;
+			if (key[KEY_SPACE]) {
+				for (auto&& m : missiles) {
+					if (((m)->isAlive) == false && justShot > 5) {
+						(m)->shoot(xPos, yPos);
+						justShot = 0;
+					}
+				}
+			}
 		}
 		//keyboard and screen sections//////////////////////////////////////////
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -176,12 +198,14 @@ int main()
 			al_flip_display(); //flip everything from memory to gamescreen
 
 			//draw missiles
-			if (key[KEY_SPACE]){
+
 				//cout << "test" << endl;
-				for (iter2 = missiles.begin(); iter2 != missiles.end(); iter2++) {
-					(*iter2)->draw();
-				}
+			
+			for (auto&& m : missiles) {
+				(m)->draw();
 			}
+			
+			
 
 		}//end render
 

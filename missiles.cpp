@@ -2,6 +2,8 @@
 #include <allegro5/allegro.h>
 #include<allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
+#include <iostream>
+using namespace std;
 
 
 
@@ -26,8 +28,9 @@ void missile::move() {
 }
 
 void missile::draw() {
-	if (isAlive = true) {
+	if (isAlive == true) {
 		al_draw_circle(xpos, ypos, 10, ALLEGRO_COLOR (), 1);
+		cout << "drawing circle" << endl;
 	}
 }
 

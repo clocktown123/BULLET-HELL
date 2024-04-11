@@ -5,9 +5,9 @@ private:
 	double ypos;
 	double angle;
 	double radius;
+	bool isAlive;
 public:
 	missile(int x, int y);
-	bool isAlive;
 	//missile();
 	void move();
 	void draw();

@@ -16,8 +16,8 @@ using namespace std;
 //}
 
 missile::missile(int x, int y) {
-	xpos = x;
-	ypos = y;
+	xpos = 0;
+	ypos = 0;
 	angle = 90;
 	radius = 10;
 	isAlive = false;
@@ -29,13 +29,13 @@ void missile::move() {
 
 void missile::draw() {
 	if (isAlive == true) {
-		al_draw_circle(xpos, ypos, 10, ALLEGRO_COLOR (), 1);
+		al_draw_filled_circle(xpos, ypos, 10, al_map_rgb(255,20,10));
 		cout << "drawing circle" << endl;
 	}
 }
 
 void missile::kill() {
-	bool isAlive = false;
+	isAlive = false;
 }
 
 bool missile::offScreen() {
@@ -49,7 +49,7 @@ bool missile::offScreen() {
 }
 
 bool missile::Alive() {
-	return true;
+	return isAlive;
 }
 
 int missile::getx() {
@@ -61,7 +61,7 @@ int missile::gety() {
 }
 
 void missile::shoot(int xPos, int yPos) {
-	bool isAlive = false;
+	isAlive = true;
 	xpos = xPos;
 	ypos = yPos;
 

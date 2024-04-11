@@ -79,11 +79,11 @@ int main()
 			}
 
 			for (auto&& m : missiles) {
-				if (m->isAlive) {
-					m->move();
+				if ((m)->Alive()) {
+					(m)->move();
 				}
-				if (m->offScreen()) {
-					m->kill();
+				if ((m)->offScreen()) {
+					(m)->kill();
 				}
 			}
 
@@ -101,7 +101,6 @@ int main()
 
 			}
 
-
 			//move player 4 pixels in a direction when key is pressed
 			if (key[KEY_UP]) {
 				yPos -= 4.0;
@@ -118,8 +117,12 @@ int main()
 			redraw = true;
 
 			if (key[KEY_SPACE]) {
-				bool isAlive = true;
-				cout << "pew" << endl;
+				for (auto&& m : missiles) {
+					if (((m)->Alive()) == false && justShot > 5) {
+						(m)->shoot(xPos, yPos);
+						justShot = 0;
+					}
+				}
 			}
 
 			if (key[KEY_RIGHT])
@@ -128,14 +131,6 @@ int main()
 				dir = LEFT;
 			else
 				dir = UP;
-			if (key[KEY_SPACE]) {
-				for (auto&& m : missiles) {
-					if (((m)->isAlive) == false && justShot > 5) {
-						(m)->shoot(xPos, yPos);
-						justShot = 0;
-					}
-				}
-			}
 		}
 		//keyboard and screen sections//////////////////////////////////////////
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -202,7 +197,9 @@ int main()
 				//cout << "test" << endl;
 			
 			for (auto&& m : missiles) {
+				
 				(m)->draw();
+				//cout << "test" << endl;
 			}
 			
 			
